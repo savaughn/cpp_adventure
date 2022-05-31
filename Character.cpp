@@ -65,13 +65,15 @@ void Character::tick(float deltaTime)
         weapon.height * scale
     };
     DrawTexturePro(weapon, source, destination, origin, rotation, WHITE);
-    DrawRectangleLines(
-        weaponCollisionRec.x,
-        weaponCollisionRec.y,
-        weaponCollisionRec.width,
-        weaponCollisionRec.height, 
-        RED
-    );
+    if (debugMode) {
+        DrawRectangleLines(
+            weaponCollisionRec.x,
+            weaponCollisionRec.y,
+            weaponCollisionRec.width,
+            weaponCollisionRec.height, 
+            RED
+        );
+    }
 }
 
 Vector2 Character::getScreenPos()
