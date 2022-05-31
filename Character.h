@@ -43,4 +43,5 @@ private:
     float width{};
     float height{};
     Vector2 worldPositionLastFrame{};
+    float scale{4.f};
 };

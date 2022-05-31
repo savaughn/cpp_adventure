@@ -1,19 +1,27 @@
 #include "Character.h"
 #include "raymath.h"
 
-Character::Character(int winWidth, int winHeight) {
+Character::Character(int winWidth, int winHeight)
+{
     width = texture.width / animData.maxFrame;
     height = texture.height;
     screenPos = {
-        (float)winWidth / 2.0f - 4.0f * (0.5f * width),
-        (float)winHeight / 2.0f - 4.0f * (0.5f * height)};
+        static_cast<float>(winWidth) / 2.0f - scale * (0.5f * width),
+        static_cast<float>(winHeight) / 2.0f - scale * (0.5f * height)};
 }
 
 void Character::drawPlayer(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData)
 {
     rightLeft = direction.x < 0.f ? -1.f : 1.f;
-    Rectangle sourceRectangle = {animData.frame * (float)knight.width / 6.f, 0.f, (rightLeft) * (float)knight.width / 6.f, (float)knight.height};
-    Rectangle destinationRectangle = {knightPosition.x, knightPosition.y, 4.0f * (float)knight.width / 6.f, 4.0f * (float)knight.height};
+    Rectangle sourceRectangle = {
+        animData.frame * static_cast<float>(knight.width) / 6.f,
+        0.f, (rightLeft) * static_cast<float>(knight.width) / 6.f,
+        static_cast<float>(knight.height)};
+    Rectangle destinationRectangle = {
+        knightPosition.x, knightPosition.y,
+        scale * static_cast<float>(knight.width) / 6.f,
+        scale * static_cast<float>(knight.height)
+    };
     DrawTexturePro(knight, sourceRectangle, destinationRectangle, {0, 0}, 0.f, WHITE);
 }
 

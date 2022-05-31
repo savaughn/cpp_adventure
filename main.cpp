@@ -17,7 +17,7 @@ Vector2 initScreen()
     const auto [windowWidth, windowHeight] = screenResolution resolution;
     InitWindow(windowWidth, windowHeight, "Cpp Adventure");
     SetTargetFPS(60);
-    return {(float)windowWidth, (float)windowHeight};
+    return {static_cast<float>(windowWidth), static_cast<float>(windowHeight)};
 }
 
 void drawBackground(Texture2D map, Vector2 mapPosition)
@@ -28,14 +28,14 @@ void drawBackground(Texture2D map, Vector2 mapPosition)
 int main()
 {
 
-    Vector2 window = initScreen();
+    auto [ windowWidth, windowHeight ] = initScreen();
     Texture2D map = LoadTexture("nature_tileset/WorldMap.png");
     Vector2 mapPosition = {0.0, 0.0};
     const float mapScale = 4.f;
 
     Character knight{
-        window.x,
-        window.y
+        windowWidth,
+        windowHeight
     };
 
     while (!WindowShouldClose())
