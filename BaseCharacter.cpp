@@ -55,7 +55,13 @@ void BaseCharacter::tick(float deltaTime) {
 
     texture = Vector2Length(velocity) ? run : idle;
 
-    rightLeft = velocity.x < 0.f ? -1.f : 1.f;
+    if (velocity.x < 0.f) {
+        rightLeft = -1.f;
+    }
+    if (velocity.x > 0.f) {
+        rightLeft = 1.f;
+    }
+
     drawCharacter(texture, getScreenPos(), velocity, rightLeft, animData);
     
     if (IsKeyPressed(KEY_F1)) {

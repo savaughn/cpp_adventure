@@ -37,9 +37,7 @@ void Character::tick(float deltaTime)
             weapon.height * scale
         };
         rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? 35.f : 0.f;
-    }
-    else
-    {
+    } else {
         origin = Vector2{weapon.width * scale, weapon.height * scale};
         offset = Vector2{25.f, 55.f};
         weaponCollisionRec = {

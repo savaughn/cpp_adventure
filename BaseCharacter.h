@@ -65,7 +65,7 @@ protected:
     float scale{4.f};
     bool debugMode{false};
     Vector2 velocity{};
-    float rightLeft{};
+    float rightLeft{1.f};
 
 private:
     bool alive{true};
