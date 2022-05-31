@@ -19,21 +19,12 @@ void BaseCharacter::drawCharacter(Texture2D knight, Vector2 knightPosition, Vect
     DrawTexturePro(knight, sourceRectangle, destinationRectangle, {0, 0}, 0.f, WHITE);
 }
 
-// Rectangle BaseCharacter::getCollisionRec() {
-//     return Rectangle{
-//         getScreenPos().x + (width * scale * (0.5f)/2.f),
-//         getScreenPos().y + height * scale * 0.85f,
-//         width * scale * 0.5f,
-//         height * scale / 8.f
-//     };
-// }
-
 Rectangle BaseCharacter::getCollisionRec() {
     return Rectangle{
-        getScreenPos().x,
-        getScreenPos().y,
-        width * scale,
-        height * scale
+        getScreenPos().x + (width * scale * (0.5f)/2.f),
+        getScreenPos().y + height * scale * 0.85f,
+        width * scale * 0.5f,
+        height * scale / 8.f
     };
 }
 
