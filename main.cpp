@@ -68,11 +68,11 @@ int main()
         knight.tick(GetFrameTime());
 
         if (
-            knight.getWorldPos().x < 0.f - 5 ||
-            knight.getWorldPos().y < 0.f - 5 ||
+            knight.getWorldPos().x < 0.f ||
+            knight.getWorldPos().y < 0.f ||
             knight.getWorldPos().x + windowWidth > map.width ||
-            knight.getWorldPos().y + windowHeight > map.height)
-        {
+            knight.getWorldPos().y + windowHeight > map.height - 10)
+        { 
             knight.undoMovement();
         }
 
