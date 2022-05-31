@@ -54,3 +54,12 @@ void Character::tick(float deltaTime)
 
     drawPlayer(texture, screenPos, direction, 1.f, animData);
 }
+
+Rectangle Character::getCollisionRec() {
+    return Rectangle{
+        screenPos.x,
+        screenPos.y,
+        width * scale,
+        height * scale
+    };
+}

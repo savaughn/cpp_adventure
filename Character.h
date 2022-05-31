@@ -25,6 +25,7 @@ public:
     void undoMovement() {
         worldPos = worldPositionLastFrame;
     };
+    Rectangle getCollisionRec();
 
 private:
     void drawPlayer(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData);

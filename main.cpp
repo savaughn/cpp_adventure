@@ -4,7 +4,11 @@
 #include <cmath>
 #include <chrono>
 #include <iostream>
-#define resolution {384, 384}
+#include "Prop.h"
+#define resolution \
+    {              \
+        384, 384   \
+    }
 
 struct screenResolution
 {
@@ -28,14 +32,21 @@ void drawBackground(Texture2D map, Vector2 mapPosition)
 int main()
 {
 
-    auto [ windowWidth, windowHeight ] = initScreen();
+    auto [windowWidth, windowHeight] = initScreen();
     Texture2D map = LoadTexture("nature_tileset/WorldMap.png");
     Vector2 mapPosition = {0.0, 0.0};
-    const float mapScale = 4.f;
 
     Character knight{
         windowWidth,
-        windowHeight
+        windowHeight};
+
+    Prop props[2]{
+        Prop{
+            Vector2{600.f, 300.f},
+            LoadTexture("nature_tileset/Rock.png")},
+        Prop{
+            Vector2{400.f, 500.f},
+            LoadTexture("nature_tileset/Log.png")},
     };
 
     while (!WindowShouldClose())
@@ -48,15 +59,33 @@ int main()
         // Game Loop
         mapPosition = Vector2Scale(knight.getWorldPos(), -1.f);
         drawBackground(map, mapPosition);
+
+        for (auto prop : props)
+        {
+            prop.Render(knight.getWorldPos());
+        }
+
         knight.tick(GetFrameTime());
 
         if (
             knight.getWorldPos().x < 0.f - 5 ||
             knight.getWorldPos().y < 0.f - 5 ||
-            knight.getWorldPos().x + window.x > map.width ||
-            knight.getWorldPos().y + window.y > map.height        
-        ) {
+            knight.getWorldPos().x + windowWidth > map.width ||
+            knight.getWorldPos().y + windowHeight > map.height)
+        {
             knight.undoMovement();
+        }
+
+        for (auto prop : props)
+        {
+            if(CheckCollisionRecs(
+                prop.getCollisionRec(
+                    knight.getWorldPos()
+                ),
+                knight.getCollisionRec()
+            )) {
+                knight.undoMovement();
+            }
         }
 
         // swap framebuffer
