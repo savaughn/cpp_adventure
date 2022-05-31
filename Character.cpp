@@ -44,6 +44,10 @@ void Character::tick(float deltaTime)
         worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
     }
 
+    if (IsKeyDown(KEY_F1)) {
+        drawCollisionDebug();
+    }
+
     animData.runningTime += deltaTime;
     if (animData.runningTime >= animData.updateTime)
     {
@@ -53,13 +57,17 @@ void Character::tick(float deltaTime)
     texture = Vector2Length(direction) ? run : idle;
 
     drawPlayer(texture, screenPos, direction, 1.f, animData);
+    if (debugMode) {
+        auto [a,b,c,d] = getCollisionRec();
+        DrawRectangle(a,b,c,d, GREEN);
+    }
 }
 
 Rectangle Character::getCollisionRec() {
     return Rectangle{
-        screenPos.x,
-        screenPos.y,
-        width * scale,
-        height * scale
+        screenPos.x + (width * scale * (0.5f)/2.f),
+        screenPos.y + height * scale * 0.75f,
+        width * scale * 0.5f,
+        height * scale / 8.f
     };
 }

@@ -26,6 +26,9 @@ public:
         worldPos = worldPositionLastFrame;
     };
     Rectangle getCollisionRec();
+    void drawCollisionDebug() {
+        debugMode = !debugMode;
+    };
 
 private:
     void drawPlayer(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData);
@@ -45,4 +48,5 @@ private:
     float height{};
     Vector2 worldPositionLastFrame{};
     float scale{4.f};
+    bool debugMode{false};
 };

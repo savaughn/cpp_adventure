@@ -5,6 +5,7 @@
 #include <chrono>
 #include <iostream>
 #include "Prop.h"
+#include "Enemy.h"
 #define resolution \
     {              \
         384, 384   \
@@ -39,6 +40,12 @@ int main()
     Character knight{
         windowWidth,
         windowHeight};
+
+    Enemy goblin{
+        Vector2{},
+        LoadTexture("characters/goblin_idle_spritesheet.png"),
+        LoadTexture("characters/goblin_run_spritesheet.png")
+    };
 
     Prop props[2]{
         Prop{
@@ -87,6 +94,8 @@ int main()
                 knight.undoMovement();
             }
         }
+
+        goblin.tick(GetFrameTime());
 
         // swap framebuffer
         EndDrawing();
