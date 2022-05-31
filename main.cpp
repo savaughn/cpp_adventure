@@ -71,7 +71,7 @@ int main()
 
         for (auto prop : props)
         {
-            prop.Render(knight.getWorldPos());
+            prop.Render(knight.getWorldPos(), knight.isDebugActive());
         }
 
         knight.tick(GetFrameTime());

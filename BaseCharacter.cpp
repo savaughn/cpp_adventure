@@ -1,4 +1,5 @@
 #include "BaseCharacter.h"
+#include "raymath.h"
 
 BaseCharacter::BaseCharacter() {
 
@@ -21,9 +22,41 @@ void BaseCharacter::drawCharacter(Texture2D knight, Vector2 knightPosition, Vect
 
 Rectangle BaseCharacter::getCollisionRec() {
     return Rectangle{
-        screenPos.x + (width * scale * (0.5f)/2.f),
-        screenPos.y + height * scale * 0.75f,
+        getScreenPos().x + (width * scale * (0.5f)/2.f),
+        getScreenPos().y + height * scale * 0.85f,
         width * scale * 0.5f,
         height * scale / 8.f
     };
+}
+
+void BaseCharacter::tick(float deltaTime) {
+    worldPositionLastFrame = worldPos;
+    
+
+    animData.runningTime += deltaTime;
+    if (animData.runningTime >= animData.updateTime)
+    {
+        animData.frame += 1 % animData.maxFrame;
+        animData.runningTime = 0;
+    }
+
+    if (Vector2Length(velocity) != 0.0)
+    {
+        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(velocity), speed));
+    }
+
+    texture = Vector2Length(velocity) ? run : idle;
+
+    drawCharacter(texture, getScreenPos(), velocity, 1.f, animData);
+    
+    if (IsKeyDown(KEY_F1)) {
+        drawCollisionDebug();
+    }
+    
+    if (debugMode) {
+        auto [a,b,c,d] = getCollisionRec();
+        DrawRectangle(a,b,c,d, GREEN);
+    }
+
+    velocity = {0.f, 0.f};
 }

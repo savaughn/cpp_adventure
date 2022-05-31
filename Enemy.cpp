@@ -9,16 +9,17 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture) {
 
     width = texture.width / animData.maxFrame;
     height = texture.height;
+
+    speed = 2.5f;
 }
 
 void Enemy::tick(float deltaTime) {
-    worldPositionLastFrame = worldPos;
-    screenPos = Vector2Subtract(worldPos, target->getWorldPos());
-    animData.runningTime += deltaTime;
-    if (animData.runningTime >= animData.updateTime)
-    {
-        animData.frame += 1 % animData.maxFrame;
-        animData.runningTime = 0;
-    }
-    drawCharacter(texture, screenPos, {1.f, 0.f}, 1.f, animData);
+    velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
+    BaseCharacter::tick(deltaTime);
+}
+
+Vector2 Enemy::getScreenPos() {
+    return Vector2{
+        Vector2Subtract(worldPos, target->getWorldPos())
+    };
 }
