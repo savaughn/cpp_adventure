@@ -39,6 +39,13 @@ public:
         return debugMode;
     };
     virtual Vector2 getScreenPos() = 0;
+    bool getAlive() {
+        return alive;
+    };
+    void setAlive(bool alive) {
+        this->alive = alive;
+    };
+    
 protected:
     void drawCharacter(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData);
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -58,5 +65,9 @@ protected:
     float scale{4.f};
     bool debugMode{false};
     Vector2 velocity{};
+    float rightLeft{};
+
+private:
+    bool alive{true};
 };
 #endif

@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Prop.h"
 #include "Enemy.h"
+#include <string>
 #define resolution \
     {              \
         384, 384   \
@@ -74,6 +75,16 @@ int main()
             prop.Render(knight.getWorldPos(), knight.isDebugActive());
         }
 
+        if (!knight.getAlive()) {
+            DrawText("Game Over!", 55.f, 45.f, 40, RED);
+            EndDrawing();
+            continue;
+        } else {
+            std::string knightHealth = "Health: ";
+            knightHealth.append(std::to_string(knight.getHealth()), 0, 5);
+            DrawText(knightHealth.c_str(), 55.f, 45.f, 40, RED);
+        }
+
         knight.tick(GetFrameTime());
 
         if (
@@ -98,6 +109,16 @@ int main()
         }
 
         goblin.tick(GetFrameTime());
+
+        if (
+                IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && 
+                CheckCollisionRecs(
+                    knight.getWeaponCollisionRec(),
+                    goblin.getCollisionRec()
+                )
+            ){
+            goblin.setAlive(false);
+        }
 
         // swap framebuffer
         EndDrawing();

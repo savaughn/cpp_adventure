@@ -7,7 +7,6 @@ BaseCharacter::BaseCharacter() {
 
 void BaseCharacter::drawCharacter(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData)
 {
-    rightLeft = direction.x < 0.f ? -1.f : 1.f;
     Rectangle sourceRectangle = {
         animData.frame * static_cast<float>(knight.width) / 6.f,
         0.f, (rightLeft) * static_cast<float>(knight.width) / 6.f,
@@ -20,12 +19,21 @@ void BaseCharacter::drawCharacter(Texture2D knight, Vector2 knightPosition, Vect
     DrawTexturePro(knight, sourceRectangle, destinationRectangle, {0, 0}, 0.f, WHITE);
 }
 
+// Rectangle BaseCharacter::getCollisionRec() {
+//     return Rectangle{
+//         getScreenPos().x + (width * scale * (0.5f)/2.f),
+//         getScreenPos().y + height * scale * 0.85f,
+//         width * scale * 0.5f,
+//         height * scale / 8.f
+//     };
+// }
+
 Rectangle BaseCharacter::getCollisionRec() {
     return Rectangle{
-        getScreenPos().x + (width * scale * (0.5f)/2.f),
-        getScreenPos().y + height * scale * 0.85f,
-        width * scale * 0.5f,
-        height * scale / 8.f
+        getScreenPos().x,
+        getScreenPos().y,
+        width * scale,
+        height * scale
     };
 }
 
@@ -47,15 +55,16 @@ void BaseCharacter::tick(float deltaTime) {
 
     texture = Vector2Length(velocity) ? run : idle;
 
-    drawCharacter(texture, getScreenPos(), velocity, 1.f, animData);
+    rightLeft = velocity.x < 0.f ? -1.f : 1.f;
+    drawCharacter(texture, getScreenPos(), velocity, rightLeft, animData);
     
-    if (IsKeyDown(KEY_F1)) {
+    if (IsKeyPressed(KEY_F1)) {
         drawCollisionDebug();
     }
     
     if (debugMode) {
         auto [a,b,c,d] = getCollisionRec();
-        DrawRectangle(a,b,c,d, GREEN);
+        DrawRectangleLines(a,b,c,d, GREEN);
     }
 
     velocity = {0.f, 0.f};
