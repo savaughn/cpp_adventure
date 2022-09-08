@@ -26,7 +26,7 @@
 # Define required raylib variables
 PROJECT_NAME       ?= game
 RAYLIB_VERSION     ?= 4.2.0
-RAYLIB_PATH        ?= .
+RAYLIB_PATH        ?= ~/raylib
 
 # Define compiler path on Windows
 COMPILER_PATH      ?= C:\raylib\w64devkit\bin
@@ -45,9 +45,11 @@ PLATFORM           ?= PLATFORM_DESKTOP
 # the library at EXAMPLE_RUNTIME_PATH, if present, will take precedence over the one at RAYLIB_INSTALL_PATH.
 # RAYLIB_INSTALL_PATH should be the desired full path to libraylib. No relative paths.
 DESTDIR ?= .
-RAYLIB_INSTALL_PATH ?= lib/
+
+LOCAL_PATH ?= usr/local/
+RAYLIB_INSTALL_PATH ?= $(LOCAL_PATH)lib/
 # RAYLIB_H_INSTALL_PATH locates the installed raylib header and associated source files.
-RAYLIB_H_INSTALL_PATH ?= include/
+RAYLIB_H_INSTALL_PATH ?= $(LOCAL_PATH)include/
 
 # Library type used for raylib: STATIC (.a) or SHARED (.so/.dll)
 RAYLIB_LIBTYPE        ?= STATIC
@@ -104,7 +106,7 @@ endif
 # Required for ldconfig or other tools that do not perform path expansion.
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
-        RAYLIB_PREFIX ?= ..
+        RAYLIB_PREFIX ?= ~/raylib
         RAYLIB_PATH    = $(realpath $(RAYLIB_PREFIX))
     endif
 endif
@@ -127,7 +129,7 @@ endif
 
 # Define raylib release directory for compiled library.
 # RAYLIB_RELEASE_PATH points to provided binaries or your freshly built version
-RAYLIB_RELEASE_PATH 	?= lib/
+RAYLIB_RELEASE_PATH 	?= usr/local/lib/
 
 # EXAMPLE_RUNTIME_PATH embeds a custom runtime location of libraylib.so or other desired libraries
 # into each example binary compiled with RAYLIB_LIBTYPE=SHARED. It defaults to RAYLIB_RELEASE_PATH
@@ -266,7 +268,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
         # Reset everything.
         # Precedence: immediately local, installed version, raysan5 provided libs -I$(RAYLIB_H_INSTALL_PATH) -I$(RAYLIB_PATH)/release/include
-        INCLUDE_PATHS = -I$(RAYLIB_H_INSTALL_PATH) -isystem. -isystem$(RAYLIB_PATH)\src -isystem$(RAYLIB_PATH)\release\include -isystem$(RAYLIB_PATH)\src\external
+        INCLUDE_PATHS = -I$(RAYLIB_H_INSTALL_PATH) -isystem. -isystem$(RAYLIB_PATH)\src -isystem$(RAYLIB_PATH)\release\include -isystem$(RAYLIB_PATH)\src\external -Iinclude/
     endif
 endif
 
