@@ -251,7 +251,7 @@ endif
 
 # Define include paths for required headers
 # NOTE: Several external required libraries (stb and others)
-INCLUDE_PATHS = -Iinclude
+INCLUDE_PATHS = -Iinclude 
 
 # Define additional directories containing required header files
 ifeq ($(PLATFORM),PLATFORM_RPI)
@@ -269,6 +269,11 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # Reset everything.
         # Precedence: immediately local, installed version, raysan5 provided libs -I$(RAYLIB_H_INSTALL_PATH) -I$(RAYLIB_PATH)/release/include
         INCLUDE_PATHS = -I$(RAYLIB_H_INSTALL_PATH) -isystem. -isystem$(RAYLIB_PATH)\src -isystem$(RAYLIB_PATH)\release\include -isystem$(RAYLIB_PATH)\src\external -Iinclude/
+    endif
+    ifeq ($(PLATFORM_OS),WINDOWS)
+        # Reset everything.
+        # Precedence: immediately local, installed version, raysan5 provided libs -I$(RAYLIB_H_INSTALL_PATH) -I$(RAYLIB_PATH)/release/include
+        INCLUDE_PATHS = -IC:/raylib/raylib/src -Iinclude/
     endif
 endif
 
