@@ -6,7 +6,7 @@
 
 class Character : public BaseCharacter {
 public:
-    Character(int winWidth, int winHeight);
+    Character(int winWidth, int winHeight, Vector2 startingWorldPos);
     virtual void tick(float deltaTime) override;
     virtual Vector2 getScreenPos() override;
     Rectangle getWeaponCollisionRec() const {

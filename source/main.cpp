@@ -7,135 +7,71 @@
 #include "Prop.h"
 #include "Enemy.h"
 #include <string>
-#define resolution \
-    {              \
-        384, 384   \
-    }
-
-struct screenResolution
-{
-    int width;
-    int height;
-};
-
-Vector2 initScreen()
-{
-    const auto [windowWidth, windowHeight] = screenResolution resolution;
-    InitWindow(windowWidth, windowHeight, "Cpp Adventure");
-    SetTargetFPS(60);
-    return {static_cast<float>(windowWidth), static_cast<float>(windowHeight)};
-}
+#include "WindowManagement.h"
 
 void drawBackground(Texture2D map, Vector2 mapPosition)
 {
     DrawTexture(map, mapPosition.x, mapPosition.y, WHITE);
 }
 
+void executeGameLoop(Character player, Texture2D map, Vector2 mapPosition) {
+    // Game Loop
+    mapPosition = Vector2Scale(player.getWorldPos(), -1.f);
+    drawBackground(map, mapPosition);
+
+    if (!player.getAlive()) {
+        DrawText("Game Over!", 55.f, 45.f, 40, RED);
+        EndDrawing();
+        return;
+    } else {
+        std::string playerHealth = "Health: ";
+        playerHealth.append(std::to_string(player.getHealth()), 0, 5);
+        DrawText(playerHealth.c_str(), 55.f, 45.f, 40, RED);
+    }
+
+    // player.tick(GetFrameTime());
+    // return;
+
+    // if (
+    //     player.getWorldPos().x < map.width / -2 ||
+    //     player.getWorldPos().y < map.height / -4)
+    //     // player.getWorldPos().x + windowWidth > map.width ||
+    //     // player.getWorldPos().y + windowHeight > map.height - 10)
+    // { 
+    //     player.undoMovement();
+    // }
+}
+
 int main()
 {
+    WindowManagement WindowManager;
 
-    auto [windowWidth, windowHeight] = initScreen();
+    auto [windowWidth, windowHeight] = WindowManager.initScreen();
     Texture2D map = LoadTexture("nature_tileset/WorldMap.png");
     Vector2 mapPosition = {0.0, 0.0};
 
-    Character knight{
-        windowWidth,
-        windowHeight
-    };
-
-    Enemy goblin{
-        Vector2{600.f, 300.f},
-        LoadTexture("characters/goblin_idle_spritesheet.png"),
-        LoadTexture("characters/goblin_run_spritesheet.png")
-    };
-
-    Enemy slime{
-        Vector2{500.f, 700.f},
-        LoadTexture("characters/slime_idle_spritesheet.png"),
-        LoadTexture("characters/slime_run_spritesheet.png")
-    };
-
-    Enemy* enemies[]{
-        &goblin,
-        &slime,
-    };
-
-    for(auto enemy : enemies) {
-        enemy -> setTarget(&knight);
-    }
-
-    Prop props[2]{
-        Prop{
-            Vector2{600.f, 450.f},
-            LoadTexture("nature_tileset/Rock.png")},
-        Prop{
-            Vector2{400.f, 500.f},
-            LoadTexture("nature_tileset/Log.png")},
+    Character player{
+        static_cast<int>(windowWidth),
+        static_cast<int>(windowHeight),
+        { 0.f, 0.f}
     };
 
     while (!WindowShouldClose())
     {
+        WindowManager.draw();
 
-        // Init framebuffer
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
+        executeGameLoop(player, map, mapPosition);
+         
+    player.tick(GetFrameTime());
 
-        // Game Loop
-        mapPosition = Vector2Scale(knight.getWorldPos(), -1.f);
-        drawBackground(map, mapPosition);
-
-        for (auto prop : props)
-        {
-            prop.Render(knight.getWorldPos(), knight.isDebugActive());
-        }
-
-        if (!knight.getAlive()) {
-            DrawText("Game Over!", 55.f, 45.f, 40, RED);
-            EndDrawing();
-            continue;
-        } else {
-            std::string knightHealth = "Health: ";
-            knightHealth.append(std::to_string(knight.getHealth()), 0, 5);
-            DrawText(knightHealth.c_str(), 55.f, 45.f, 40, RED);
-        }
-
-        knight.tick(GetFrameTime());
-
-        if (
-            knight.getWorldPos().x < 0.f ||
-            knight.getWorldPos().y < 0.f ||
-            knight.getWorldPos().x + windowWidth > map.width ||
-            knight.getWorldPos().y + windowHeight > map.height - 10)
-        { 
-            knight.undoMovement();
-        }
-
-        for (auto prop : props)
-        {
-            if(CheckCollisionRecs(
-                prop.getCollisionRec(
-                    knight.getWorldPos()
-                ),
-                knight.getCollisionRec()
-            )) {
-                knight.undoMovement();
-            }
-        }
-
-        for (auto enemy : enemies) {
-            enemy->tick(GetFrameTime());
-        }
-
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){  
-            for (auto enemy : enemies) {
-                if (CheckCollisionRecs(
-                    knight.getWeaponCollisionRec(),
-                    enemy->getCollisionRec()
-                )) {
-                    enemy->setAlive(false);
-                }
-            }
-        }
+    if (
+        player.getWorldPos().x < map.width / -2 ||
+        player.getWorldPos().y < map.height / -4)
+        // player.getWorldPos().x + windowWidth > map.width ||
+        // player.getWorldPos().y + windowHeight > map.height - 10)
+    { 
+        player.undoMovement();
+    }
 
         // swap framebuffer
         EndDrawing();

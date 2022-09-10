@@ -47,22 +47,22 @@ public:
     };
     
 protected:
-    void drawCharacter(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData);
-    Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
-    Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
-    Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};
+    void drawCharacter(Texture2D sprite, Vector2 spritePosition, Vector2 direction, float rightLeft, AnimData animData);
+    Texture2D texture{LoadTexture("assets/frog/frog-run.png")};
+    Texture2D idle{LoadTexture("assets/frog/frog-idle.png")};
+    Texture2D run{LoadTexture("assets/frog/frog-run.png")};
     Vector2 worldPos{};
     AnimData animData{
         0,
         0.0f,
-        1.f / 12.f,
-        6
+        1.f / 8.f,
+        4
     };
     float speed{4.f};
     float width{};
     float height{};
     Vector2 worldPositionLastFrame{};
-    float scale{4.f};
+    float scale{8.f};
     bool debugMode{false};
     Vector2 velocity{};
     float rightLeft{1.f};

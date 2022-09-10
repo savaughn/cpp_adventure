@@ -5,18 +5,20 @@ BaseCharacter::BaseCharacter() {
 
 }
 
-void BaseCharacter::drawCharacter(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData)
+void BaseCharacter::drawCharacter(Texture2D sprite, Vector2 spritePosition, Vector2 direction, float rightLeft, AnimData animData)
 {
     Rectangle sourceRectangle = {
-        animData.frame * static_cast<float>(knight.width) / 6.f,
-        0.f, (rightLeft) * static_cast<float>(knight.width) / 6.f,
-        static_cast<float>(knight.height)};
+        animData.frame * static_cast<float>(sprite.width) / 4.f,
+        0.f, 
+        (rightLeft) * static_cast<float>(sprite.width) / 4.f,
+        static_cast<float>(sprite.height)};
     Rectangle destinationRectangle = {
-        knightPosition.x, knightPosition.y,
-        scale * static_cast<float>(knight.width) / 6.f,
-        scale * static_cast<float>(knight.height)
+        spritePosition.x, 
+        spritePosition.y,
+        scale * static_cast<float>(sprite.width) / 4.f,
+        scale * static_cast<float>(sprite.height)
     };
-    DrawTexturePro(knight, sourceRectangle, destinationRectangle, {0, 0}, 0.f, WHITE);
+    DrawTexturePro(sprite, sourceRectangle, destinationRectangle, {0, -400.f}, 0.f, WHITE);
 }
 
 Rectangle BaseCharacter::getCollisionRec() {
@@ -61,7 +63,7 @@ void BaseCharacter::tick(float deltaTime) {
     
     if (debugMode) {
         auto [a,b,c,d] = getCollisionRec();
-        DrawRectangleLines(a,b,c,d, GREEN);
+        DrawRectangleLines(a,b,c,d, PURPLE);
     }
 
     velocity = {0.f, 0.f};
