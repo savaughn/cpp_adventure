@@ -10,9 +10,9 @@
                 "BUILD_MODE=DEBUG"
             ],
             "windows": {
-                "command": "C:\\mingw64\\bin\\mingw32-make.exe",
+                "command": "C:/mingw64/bin/mingw32-make.exe",
                 "args": [
-                    "RAYLIB_PATH=C:\raylib",
+                    "RAYLIB_PATH=C:/raylib",
                     "PROJECT_NAME=${fileBasenameNoExtension}",
                     "OBJS=source/*.cpp",
                     "BUILD_MODE=DEBUG"
@@ -48,11 +48,11 @@
                 "PLATFORM=PLATFORM_DESKTOP"
             ],
             "windows": {
-                "command": "C:\\mingw64\\bin\\mingw32-make.exe",
+                "command": "C:/mingw64/bin/mingw32-make.exe",
                 "args": [
-                    "RAYLIB_PATH=C:\raylib",
+                    "RAYLIB_PATH=C:/raylib",
                     "PROJECT_NAME=${fileBasenameNoExtension}",
-                    "OBJS=*.cpp"
+                    "OBJS=source/*.cpp"
                 ]
             },
             "osx": {
@@ -77,7 +77,7 @@
                 "kind": "build",
                 "isDefault": false
             },
-            "detail": "compiler: C:\\mingw64\\bin\\g++.exe"
+            "detail": "compiler: C:/mingw64/bin/g++.exe"
         },
         {
             "type": "cppbuild",
