@@ -58,6 +58,9 @@ void BaseCharacter::tick(float deltaTime) {
     if (IsKeyPressed(KEY_F1)) {
         drawCollisionDebug();
     }
+    if(IsKeyPressed(KEY_F2)) {
+        toggleCharacterInvincible();
+    }
     
     if (debugMode) {
         auto [a,b,c,d] = getCollisionRec();

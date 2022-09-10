@@ -7,9 +7,10 @@
 #include "Prop.h"
 #include "Enemy.h"
 #include <string>
+
 #define resolution \
     {              \
-        384, 384   \
+        1028, 720   \
     }
 
 struct screenResolution
@@ -104,10 +105,10 @@ int main()
         if (
             knight.getWorldPos().x < 0.f ||
             knight.getWorldPos().y < 0.f ||
-            knight.getWorldPos().x + windowWidth > map.width ||
-            knight.getWorldPos().y + windowHeight > map.height - 10)
+            knight.getWorldPos().x + windowWidth > map.width * 3 ||
+            knight.getWorldPos().y + windowHeight > map.height *3 - 10)
         { 
-            knight.undoMovement();
+            // knight.undoMovement();
         }
 
         for (auto prop : props)
@@ -126,13 +127,19 @@ int main()
             enemy->tick(GetFrameTime());
         }
 
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){  
+        if (
+            IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_DOWN) ||
+            IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_UP) ||
+            IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT) ||
+            IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)
+            ){  
             for (auto enemy : enemies) {
                 if (CheckCollisionRecs(
                     knight.getWeaponCollisionRec(),
                     enemy->getCollisionRec()
                 )) {
-                    enemy->setAlive(false);
+                    enemy->applyDamage(knight.getAttackPower());
+                    enemy->setAlive(enemy->getHealth() > 0);
                 }
             }
         }

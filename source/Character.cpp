@@ -12,57 +12,26 @@ void Character::tick(float deltaTime)
 {
     if (!getAlive()) return;
 
-    if (IsKeyDown(KEY_A))
+    if (IsKeyDown(KEY_A) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT))
         velocity.x -= 1.0;
-    if (IsKeyDown(KEY_D))
+    if (IsKeyDown(KEY_D) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT))
         velocity.x += 1.0;
-    if (IsKeyDown(KEY_W))
+    if (IsKeyDown(KEY_W) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_UP))
         velocity.y -= 1.0;
-    if (IsKeyDown(KEY_S))
+    if (IsKeyDown(KEY_S) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_DOWN))
         velocity.y += 1.0;
 
     BaseCharacter::tick(deltaTime);
 
     Vector2 origin{};
     Vector2 offset{};
-    float rotation{};
-    if (rightLeft > 0.f)
-    {
-        origin = Vector2{0.f, weapon.height * scale};
-        offset = Vector2{35.f, 55.f};
-        weaponCollisionRec = {
-            getScreenPos().x + offset.x,
-            getScreenPos().y + offset.y - weapon.height * scale,
-            weapon.width * scale,
-            weapon.height * scale
-        };
-        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? 35.f : 0.f;
-    } else {
-        origin = Vector2{weapon.width * scale, weapon.height * scale};
-        offset = Vector2{25.f, 55.f};
-        weaponCollisionRec = {
-            getScreenPos().x + offset.x - weapon.width * scale,
-            getScreenPos().y + offset.y - weapon.height * scale,
-            weapon.width * scale,
-            weapon.height * scale
-        };
-        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? -35.f : 0.f;
-    }
+    weaponCollisionRec = {
+        getScreenPos().x + 10,
+        getScreenPos().y + 30,
+        static_cast<float>(width * scale * 0.75),
+        static_cast<float>(height * scale * 0.5)
+    };
     
-    Rectangle source{
-        0.f,
-        0.f,
-        static_cast<float>(weapon.width) * rightLeft,
-        static_cast<float>(weapon.height)
-    };
-
-    Rectangle destination{
-        getScreenPos().x + offset.x,
-        getScreenPos().y + offset.y,
-        weapon.width * scale,
-        weapon.height * scale
-    };
-    DrawTexturePro(weapon, source, destination, origin, rotation, WHITE);
     if (debugMode) {
         DrawRectangleLines(
             weaponCollisionRec.x,
@@ -84,7 +53,7 @@ Vector2 Character::getScreenPos()
 
 void Character::takeDamage(float damage)
 {
-    health -= damage;
+    if (!getIsCharacterInvicible()) {health -= damage;}
     if (health <= 0)
     {
         health = 0;
