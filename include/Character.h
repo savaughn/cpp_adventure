@@ -3,10 +3,11 @@
 
 #include "raylib.h"
 #include "BaseCharacter.h"
+#include "WindowManagement.h"
 
 class Character : public BaseCharacter {
 public:
-    Character(int winWidth, int winHeight, Vector2 startingWorldPos);
+    Character(screenResolution screenRes, Vector2 startingWorldPos);
     virtual void tick(float deltaTime) override;
     virtual Vector2 getScreenPos() override;
     Rectangle getWeaponCollisionRec() const {

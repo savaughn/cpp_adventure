@@ -1,9 +1,13 @@
+#ifndef WINDOWMANAGEMENT_H
+#define WINDOWMANAGEMENT_H
+
 #include "Character.h"
 
-Character::Character(int winWidth, int winHeight, Vector2 startingWorldPos)
+Character::Character(screenResolution screenRes, Vector2 startingWorldPos)
 {
-    windowWidth = winWidth;
-    windowHeight = winHeight;
+    auto [ width, height ]  = screenRes;
+    windowWidth = width;
+    windowHeight = height;
     width = texture.width / animData.maxFrame;
     height = texture.height;
     worldPos = startingWorldPos;
@@ -51,3 +55,5 @@ void Character::takeDamage(float damage)
         setAlive(false);
     }
 }
+
+#endif

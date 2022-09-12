@@ -8,6 +8,7 @@
     {               \
         GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()) \
     }
+#define fpsTarget 60
 
 struct screenResolution
 {
@@ -18,12 +19,11 @@ struct screenResolution
 
 class WindowManagement {
     public:
-        Vector2 initScreen()
-        {
+        WindowManagement(const char* windowTitle) {
             const auto [windowWidth, windowHeight] = screenResolution GameResolution;
-            InitWindow(windowWidth, windowHeight, "Cpp Adventure");
-            SetTargetFPS(60);
-            return {static_cast<float>(windowWidth), static_cast<float>(windowHeight)};
+            InitWindow(windowWidth, windowHeight, windowTitle);
+            SetTargetFPS(fpsTarget);
+            screenRes = { windowWidth, windowHeight };
         }
         void handleFullscreenToggle() {
             if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
@@ -45,6 +45,17 @@ class WindowManagement {
             BeginDrawing();
             ClearBackground(RAYWHITE);
         }
+
+        void endDraw() {
+            // swap framebuffer
+            EndDrawing();
+        }
+        screenResolution getScreenResolution() {
+            return screenSize;
+        }
+
+    protected:
+        screenResolution screenRes;
 
 };
 
