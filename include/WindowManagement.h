@@ -39,14 +39,16 @@ class WindowManagement {
                 ToggleFullscreen();
             }
         }
-        void draw() {
+        void draw(Camera2D camera) {
             handleFullscreenToggle();
             // Init framebuffer
             BeginDrawing();
+            BeginMode2D(camera);
             ClearBackground(RAYWHITE);
         }
 
         void endDraw() {
+            EndMode2D();
             // swap framebuffer
             EndDrawing();
         }

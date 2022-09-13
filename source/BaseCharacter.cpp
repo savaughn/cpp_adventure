@@ -18,7 +18,7 @@ void BaseCharacter::drawCharacter(Texture2D sprite, Vector2 spritePosition, Vect
         scale * static_cast<float>(sprite.width) / 4.f,
         scale * static_cast<float>(sprite.height)
     };
-    DrawTexturePro(sprite, sourceRectangle, destinationRectangle, {0, -400.f}, 0.f, WHITE);
+    DrawTexturePro(sprite, sourceRectangle, destinationRectangle, {}, 0.f, WHITE);
 }
 
 Rectangle BaseCharacter::getCollisionRec() {
@@ -55,7 +55,7 @@ void BaseCharacter::tick(float deltaTime) {
         rightLeft = 1.f;
     }
 
-    drawCharacter(texture, getScreenPos(), velocity, rightLeft, animData);
+    drawCharacter(texture, worldPos, velocity, rightLeft, animData);
     
     if (IsKeyPressed(KEY_F1)) {
         drawCollisionDebug();

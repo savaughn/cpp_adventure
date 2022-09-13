@@ -13,8 +13,8 @@ class Game {
         }
         void executeGameLoop(Character* player, Texture2D map, Vector2 mapPosition, float gameTime, Game* game) {
             // Game Loop
-            mapPosition = Vector2Scale(player->getWorldPos(), -1.f);
-                DrawTexture(map, mapPosition.x, mapPosition.y, WHITE);
+            // mapPosition = Vector2Scale(player->getWorldPos(), -1.f);
+            DrawTexture(map, mapPosition.x, mapPosition.y, WHITE);
 
             if (game->isGameOver) {
                 DrawText("Game Over!", 55.f, 45.f, 40, RED);

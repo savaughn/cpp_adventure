@@ -24,7 +24,7 @@
 .PHONY: all clean
 
 # Define required raylib variables
-PROJECT_NAME       ?= game
+6       ?= game
 RAYLIB_VERSION     ?= 4.2.0
 RAYLIB_PATH        ?= ~/raylib
 
@@ -374,7 +374,7 @@ endif
 
 # Default target entry
 # NOTE: We call this Makefile target or Makefile.Android target
-all:
+Game:
 	$(MAKE) $(MAKEFILE_PARAMS)
 
 # Project target defined by PROJECT_NAME

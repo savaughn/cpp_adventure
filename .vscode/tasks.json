@@ -27,9 +27,9 @@
             },
             "linux": {
                 "args": [
-                    "PROJECT_NAME=${fileBasenameNoExtension}",
-                    "DESTDIR=.",
-                    "RAYLIB_LIBTYPE=SHARED",
+                    "PROJECT_NAME=${fileBasenameNoExtension}_debug",
+                    "DESTDIR=build/",
+                    "RAYLIB_LIBTYPE=static",
                     "EXAMPLE_RUNTIME_PATH=usr/local/lib",
                     "OBJS=source/*.cpp",
                     "BUILD_MODE=DEBUG"
@@ -64,7 +64,7 @@
             "linux": {
                 "args": [
                     "PROJECT_NAME=${fileBasenameNoExtension}",
-                    "DESTDIR=./release",
+                    "DESTDIR=release/",
                     "RAYLIB_LIBTYPE=STATIC",
                     "EXAMPLE_RUNTIME_PATH=usr/local/lib",
                     "OBJS=source/*.cpp"
@@ -88,7 +88,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "build/${fileDirname}/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
