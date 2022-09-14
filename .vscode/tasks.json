@@ -28,7 +28,7 @@
             "linux": {
                 "args": [
                     "PROJECT_NAME=${fileBasenameNoExtension}_debug",
-                    "DESTDIR=.",
+                    "DESTDIR=build/",
                     "RAYLIB_LIBTYPE=static",
                     "EXAMPLE_RUNTIME_PATH=usr/local/lib",
                     "OBJS=source/*.cpp",

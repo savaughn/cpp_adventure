@@ -1,6 +1,6 @@
 *.exe
 *.dsym
-main_debug
+main
   
 .vscode/*
 !.vscode/settings.json
