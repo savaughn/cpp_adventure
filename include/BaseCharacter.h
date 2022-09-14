@@ -1,6 +1,6 @@
+#pragma once
+
 #include "raylib.h"
-#ifndef BASE_CHARACTER_H
-#define BASE_CHARACTER_H
 
 struct AnimData
 {
@@ -70,4 +70,3 @@ protected:
 private:
     bool alive{true};
 };
-#endif

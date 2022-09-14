@@ -1,5 +1,4 @@
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#pragma once
 
 #include "raylib.h"
 #include "BaseCharacter.h"
@@ -24,5 +23,3 @@ private:
     Rectangle weaponCollisionRec{};
     float health{100.f};
 };
-
-#endif
