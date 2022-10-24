@@ -10,7 +10,7 @@
 
 Scene::Scene() {
 	int sceneHeight = GetScreenHeight();
-	groundYPos = (3 * sceneHeight) / 4;
+	groundYPos = (2.5 * sceneHeight) / 4;
 	gravity = 1;
 }
 	

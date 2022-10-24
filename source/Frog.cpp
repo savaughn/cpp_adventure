@@ -1,7 +1,7 @@
 #include "Frog.h"
 
-static const int jumpUpFrame = 3;
-static const int jumpDownFrame = 4;
+static const int jumpUpFrame = 0;
+static const int jumpDownFrame = 1;
 static const int footstepFrame1 = 1;
 static const int footstepFrame2 = 4;
 
@@ -20,7 +20,7 @@ Frog::Frog() {
 	frameWidth = texture->width / numFrames;
 	frameRect = raylib::Rectangle(0.0f, 0.0f, (float)frameWidth, (float)texture->height);
 	
-	frameDelay = 5;
+	frameDelay = 7;
 	frameDelayCounter = 0;
 	frameIndex = 0;
 	
@@ -46,23 +46,24 @@ bool Frog::update(bool onGround) {
 	if(frameDelayCounter > frameDelay) {
 		frameDelayCounter = 0;
 		
-		if(frogMoving) {
-			if(isOnGround) {
-				++frameIndex;
-				frameIndex %= numFrames;
-				
-				if(isFootstepFrame(frameIndex)) {
-					PlaySound(footstepSound);
-				}
-			} else {
-				if(velocity.y < 0) {
+		if(isOnGround) {
+				texture = frogMoving ? &run : &idle;
+
+			++frameIndex;
+			frameIndex %= numFrames;
+			
+			if(isFootstepFrame(frameIndex)) {
+				PlaySound(footstepSound);
+			}
+		} else {
+			texture = &jump;
+			if(velocity.y < 0) {
 					frameIndex = jumpUpFrame;
 				} else {
 					frameIndex = jumpDownFrame;
 				}
 			}
 			frameRect.x = (float) frameWidth * frameIndex;
-		}
 	}
 	
 	return true;
@@ -72,7 +73,7 @@ void Frog::draw() {
 	DrawTexturePro(static_cast<Texture2D>(*texture), frameRect, {
 		position.x,
 		position.y,
-		texture->width,
+		scale * frameWidth,
 		scale * texture->height
 	}, {}, 0.f, WHITE);
 }

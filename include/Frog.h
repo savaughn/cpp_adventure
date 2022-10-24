@@ -19,7 +19,9 @@ class Frog : public Actor {
     private:
         raylib::Vector2 getUpperLeftPosition();
         raylib::Texture2D run{LoadTexture("assets/frog/frog-run.png")}; 
+        // IDEA: idle animation speed as a function of health
         raylib::Texture2D idle{LoadTexture("assets/frog/frog-idle.png")};  
+        raylib::Texture2D jump{LoadTexture("assets/frog/frog-jump-UD.png")};
         raylib::Texture2D* texture = &idle;  
         raylib::Sound footstepSound;
         raylib::Sound landingSound;

@@ -39,33 +39,29 @@ int main()
     //     1.f
     // };
 
-    while (!WindowShouldClose())
+    InputHandler inputHandler;
+
+    std::shared_ptr<Scene> currentScene = std::make_shared<TestScene>();
+    currentScene->loadResources();
+
+    SetTargetFPS(60);
+    
+
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-
-        InputHandler inputHandler;
-
-        std::shared_ptr<Scene> currentScene = std::make_shared<TestScene>();
-        currentScene->loadResources();
-
-		SetTargetFPS(60);
-		
-
-		// Main game loop
-		while (!WindowShouldClose())    // Detect window close button or ESC key
-		{
-			// Update
-			inputHandler.handleInput(*currentScene);
-			auto nextScene = currentScene->update();
-			if(nextScene) {
-				nextScene->loadResources();
-				currentScene = nextScene;
-			}
-			
-			// Draw
-			BeginDrawing();
-			currentScene->draw();
-			EndDrawing();
-		}
+        // Update
+        inputHandler.handleInput(*currentScene);
+        auto nextScene = currentScene->update();
+        if(nextScene) {
+            nextScene->loadResources();
+            currentScene = nextScene;
+        }
+        
+        // Draw
+        BeginDrawing();
+        currentScene->draw();
+        EndDrawing();
     }
 
     UnloadTexture(background.texture);
