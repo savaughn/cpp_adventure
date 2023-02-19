@@ -1,5 +1,12 @@
 *.exe
 *.dsym
+*.elf
+*.lst
+*.nacp
+*.nro
+*.o
+*.d
+*.map
 main
   
 .vscode/*
@@ -8,5 +15,6 @@ main
 !.vscode/launch.json
 !.vscode/extensions.json
 assets/
+romfs/
 
 game
