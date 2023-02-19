@@ -16,7 +16,7 @@ void Character::tick(float deltaTime)
         velocity.x -= 1.0;
     if (IsKeyDown(KEY_D))
         velocity.x += 1.0;
-    if (IsKeyDown(KEY_W))
+    if (IsGamepadButtonDown(0,GAMEPAD_BUTTON_LEFT_FACE_UP))
         velocity.y -= 1.0;
     if (IsKeyDown(KEY_S))
         velocity.y += 1.0;

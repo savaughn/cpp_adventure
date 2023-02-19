@@ -48,9 +48,9 @@ public:
     
 protected:
     void drawCharacter(Texture2D knight, Vector2 knightPosition, Vector2 direction, float rightLeft, AnimData animData);
-    Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
-    Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
-    Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};
+    Texture2D texture{LoadTexture("romfs:/characters/knight_idle_spritesheet.png")};
+    Texture2D idle{LoadTexture("romfs:/characters/knight_idle_spritesheet.png")};
+    Texture2D run{LoadTexture("romfs:/characters/knight_run_spritesheet.png")};
     Vector2 worldPos{};
     AnimData animData{
         0,

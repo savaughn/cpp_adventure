@@ -7,9 +7,10 @@
 #include "Prop.h"
 #include "Enemy.h"
 #include <string>
+#include <switch.h>
 #define resolution \
     {              \
-        384, 384   \
+        1280, 720  \
     }
 
 struct screenResolution
@@ -33,11 +34,14 @@ void drawBackground(Texture2D map, Vector2 mapPosition)
 
 int main()
 {
+    romfsInit();
 
     auto [windowWidth, windowHeight] = initScreen();
-    Texture2D map = LoadTexture("nature_tileset/WorldMap.png");
+    Texture2D map = LoadTexture("romfs:/resources/resources/nature_tileset/WorldMap.png");
     Vector2 mapPosition = {0.0, 0.0};
 
+    Texture2D knightTexture{LoadTexture("romfs:/rzesources/characters/knight_idle_spritesheet.png")};
+    // Texture2D knightTexture{LoadTexture("romfs:/resources/resources/raylib_logo.png")};
     Character knight{
         windowWidth,
         windowHeight
@@ -45,14 +49,14 @@ int main()
 
     Enemy goblin{
         Vector2{600.f, 300.f},
-        LoadTexture("characters/goblin_idle_spritesheet.png"),
-        LoadTexture("characters/goblin_run_spritesheet.png")
+        LoadTexture("romfs:/resources/characters/goblin_idle_spritesheet.png"),
+        LoadTexture("romfs:/resources/characters/goblin_run_spritesheet.png")
     };
 
     Enemy slime{
         Vector2{500.f, 700.f},
-        LoadTexture("characters/slime_idle_spritesheet.png"),
-        LoadTexture("characters/slime_run_spritesheet.png")
+        LoadTexture("romfs:/resources/characters/slime_idle_spritesheet.png"),
+        LoadTexture("romfs:/resources/characters/slime_run_spritesheet.png")
     };
 
     Enemy* enemies[]{
@@ -67,10 +71,10 @@ int main()
     Prop props[2]{
         Prop{
             Vector2{600.f, 450.f},
-            LoadTexture("nature_tileset/Rock.png")},
+            LoadTexture("romfs:/resources/nature_tileset/Rock.png")},
         Prop{
             Vector2{400.f, 500.f},
-            LoadTexture("nature_tileset/Log.png")},
+            LoadTexture("romfs:/resources/nature_tileset/Log.png")},
     };
 
     while (!WindowShouldClose())
@@ -80,9 +84,9 @@ int main()
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Game Loop
+        // // Game Loop
         mapPosition = Vector2Scale(knight.getWorldPos(), -1.f);
-        drawBackground(map, mapPosition);
+        drawBackground(map, {0.f, 0.f});
 
         for (auto prop : props)
         {
@@ -110,32 +114,32 @@ int main()
             knight.undoMovement();
         }
 
-        for (auto prop : props)
-        {
-            if(CheckCollisionRecs(
-                prop.getCollisionRec(
-                    knight.getWorldPos()
-                ),
-                knight.getCollisionRec()
-            )) {
-                knight.undoMovement();
-            }
-        }
+        // for (auto prop : props)
+        // {
+        //     if(CheckCollisionRecs(
+        //         prop.getCollisionRec(
+        //             knight.getWorldPos()
+        //         ),
+        //         knight.getCollisionRec()
+        //     )) {
+        //         knight.undoMovement();
+        //     }
+        // }
 
-        for (auto enemy : enemies) {
-            enemy->tick(GetFrameTime());
-        }
+        // for (auto enemy : enemies) {
+        //     enemy->tick(GetFrameTime());
+        // }
 
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){  
-            for (auto enemy : enemies) {
-                if (CheckCollisionRecs(
-                    knight.getWeaponCollisionRec(),
-                    enemy->getCollisionRec()
-                )) {
-                    enemy->setAlive(false);
-                }
-            }
-        }
+        // if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){  
+        //     for (auto enemy : enemies) {
+        //         if (CheckCollisionRecs(
+        //             knight.getWeaponCollisionRec(),
+        //             enemy->getCollisionRec()
+        //         )) {
+        //             enemy->setAlive(false);
+        //         }
+        //     }
+        // }
 
         // swap framebuffer
         EndDrawing();
@@ -143,4 +147,5 @@ int main()
 
     UnloadTexture(map);
     CloseWindow();
+    romfsExit();
 }
