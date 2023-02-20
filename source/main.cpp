@@ -12,11 +12,14 @@
 #include <string>
 #include "Game.h"
 #include "BackgroundManager.h"
+#include <switch.h>
 
 int main()
 {
+    romfsInit();
+    
     WindowManagement WindowManager{"cpp_adventure"};
-    BackgroundManager background{"nature_tileset/WorldMap.png"};
+    BackgroundManager background{"romfs:/resources/nature_tileset/WorldMap.png"};
     Character player{WindowManager.getScreenResolution(), { 0.f, 0.f }};
     Game game;
 
@@ -29,11 +32,11 @@ int main()
 //     float zoom;             // Camera zoom (scaling), should be 1.0f by default
 // } Camera2D;
 
-    float width = 1920.f;
-    float height = 1080.f;
+    float width = 1280.f;
+    float height = 720.f;
 
     Camera2D camera = {
-        { -800.f, 500.f },
+        { 0.f, 0.f },
         player.worldPos,
         0.f,
         1.f
@@ -43,7 +46,7 @@ int main()
     {
         camera.zoom += ((float)GetMouseWheelMove()*0.05f);
 
-        static Vector2 bbox = { 0.2f, 0.2f };
+        static Vector2 bbox = { 1.f, 1.f };
 
         Vector2 bboxWorldMin = GetScreenToWorld2D((Vector2){ (1 - bbox.x)*0.5f*width, (1 - bbox.y)*0.5f*height }, camera);
         Vector2 bboxWorldMax = GetScreenToWorld2D((Vector2){ (1 + bbox.x)*0.5f*width, (1 + bbox.y)*0.5f*height }, camera);
@@ -61,6 +64,7 @@ int main()
 
     UnloadTexture(background.texture);
     CloseWindow();
+    romfsExit();
 }
 
 #endif

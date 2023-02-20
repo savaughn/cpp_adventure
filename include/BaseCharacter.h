@@ -49,9 +49,9 @@ public:
     
 protected:
     void drawCharacter(Texture2D sprite, Vector2 spritePosition, Vector2 direction, float rightLeft, AnimData animData);
-    Texture2D texture{LoadTexture("assets/frog/frog-run.png")};
-    Texture2D idle{LoadTexture("assets/frog/frog-idle.png")};
-    Texture2D run{LoadTexture("assets/frog/frog-run.png")};
+    Texture2D texture{LoadTexture("romfs:/resources/frog/frog-run.png")};
+    Texture2D idle{LoadTexture("romfs:/resources/frog/frog-idle.png")};
+    Texture2D run{LoadTexture("romfs:/resources/frog/frog-run.png")};
     AnimData animData{
         0,
         0.0f,
